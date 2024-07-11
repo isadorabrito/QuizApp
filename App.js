@@ -1,20 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import Home from './screens/Home';
+import Quiz from './screens/Quiz';
+import Result from './screens/Result';
+import { PAGES } from './utils/pages';
 
-export default function App() {
+const App = () => {
+  const [currentScreen, setCurrentScreen] = useState(PAGES.HOME);
+  const [userData, setUserData] = useState({});
+  const [score, setScore] = useState(0);
+
+  const navigateTo = (screen, data) => {
+    setUserData({ ...userData, ...data });
+    setCurrentScreen(screen);
+  };
+
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case PAGES.HOME:
+        return <Home navigate={navigateTo} />;
+      case PAGES.QUIZ:
+        return <Quiz navigate={navigateTo} userData={userData} setScore={setScore} />;
+      case PAGES.RESULT:
+        return <Result navigate={navigateTo} userData={userData} score={score} />;
+      default:
+        return <Home navigate={navigateTo} />;
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      {renderScreen()}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
 });
+
+export default App;
