@@ -4,8 +4,8 @@ import { Container } from "../components/Container";
 import { PAGES } from "../utils/pages";
 
 const getResultMessage = (score) => {
-  if (score < 3) return "Você é um Dev Nutella";
-  if (score < 7) return "Você está no meio termo";
+  if (score <=5) return "Você é um Dev Nutella";
+  if (score <= 8) return "Você está no meio termo";
   return "Você é um Dev Raiz";
 };
 
